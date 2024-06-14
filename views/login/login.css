@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+hr {
+  width: 1000%;
+  height: 1px;
+  margin: auto;
+}
+
+.title {
+  display: flex;
+  font-size: 32px;
+  font-family: "Noto Sans KR", sans-serif;
+  justify-content: center;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.text1 {
+  position: absolute;
+  top: 368px;
+  left: 918px;
+  display: flex;
+  font-size: 32px;
+  line-height: 38.19px;
+  font-weight: 700;
+  justify-content: center;
+}
+.div1 {
+  position: absolute;
+  top: 500px;
+  left: 782px;
+  height: 300px;
+  width: 300px;
+}
+
+.text2 {
+  position: absolute;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+  width: 39px;
+  height: 18px;
+  top: 473px;
+  left: 782px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+#username {
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 499px;
+  left: 782px;
+  gap: 0px;
+  border-radius: 4px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+}
+
+.text3 {
+  position: absolute;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+  width: 52px;
+  height: 18px;
+  top: 548px;
+  left: 782px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+#password {
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 574px;
+  left: 782px;
+  gap: 0px;
+  border-radius: 4px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+}
+
+.button1 {
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 649px;
+  left: 782px;
+  background: #aca0eb;
+  color: #ffffff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.71px;
+  text-align: center;
+}
+
+.signup {
+  position: absolute;
+  width: 49px;
+  height: 17px;
+  top: 694px;
+  left: 935px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: left;
+  text-decoration-line: none;
+  color: black;
+}
+
+#helpingText {
+  position: absolute;
+  width: 1000px;
+  height: 40px;
+  top: 615px;
+  left: 782px;
+  gap: 20px;
+  opacity: 0px;
+  color: #ff0000;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+#submitLogin {
+  display: flex;
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 649px;
+  left: 782px;
+  gap: 0px;
+  border-radius: 10px 10px 10px 10px;
+  opacity: 0px;
+  background: #aca0eb;
+  color: #ffffff;
+  line-height: 33px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/signup/signup.css" />
+    <title>회원가입</title>
+  </head>
+  <body>
+    <button class="go-back" onclick="history.back()">&#60;</button>
+    <p class="title">아무 말 대잔치</p>
+    <hr />
+    <p class="text1">회원가입</p>
+    <text class="text2">프로필 사진</text>
+    <text class="helpertext" id="profileHelpingText"
+      >* 프로필 사진을 추가해주세요.</text
+    >
+    <div class="upload-button" id="uploadButton">
+      <span>+</span>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display: none" />
+
+    <text class="text2" id="email">이메일*</text>
+    <input
+      id="input-email"
+      type="text"
+      placeholder="이메일을 입력하세요"
+      size="40"
+    />
+    <text class="helpertext" id="emailHelper">* 이메일을 입력해주세요</text>
+
+    <text class="text2" id="pw">비밀번호*</text>
+    <input
+      id="input-pw"
+      type="password"
+      placeholder="비밀번호를 입력하세요"
+      size="40"
+    />
+    <text class="helpertext" id="passwordHelper"
+      >* 비밀번호를 입력해주세요</text
+    >
+    <text class="text2" id="pwcheck">비밀번호 확인*</text>
+    <input
+      id="confirm-pw"
+      type="password"
+      placeholder="비밀번호를 한번 더 입력하세요"
+      size="40"
+    />
+    <text class="helpertext" id="confirmPasswordHelper"
+      >* 비밀번호를 한번더 입력해주세요</text
+    >
+
+    <text class="text2" id="nickname">닉네임*</text>
+    <input
+      id="input-nickname"
+      type="text"
+      placeholder="닉네임을 입력하세요"
+      size="40"
+    />
+    <text class="helpertext" id="nicknameHelper">* 닉네임을 입력해주세요</text>
+
+    <button id="signupButton" disabled>회원가입</button>
+    <a class="login" href="/">로그인하러 가기</a>
+    <script src="/signup/signup.js"></script>
+  </body>
+</html>

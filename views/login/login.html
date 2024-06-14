@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/login/login.css" />
+    <title>로그인</title>
+  </head>
+  <body>
+    <p class="title">아무 말 대잔치</p>
+    <hr />
+    <p class="text1">로그인</p>
+    <form id="loginForm">
+      <text class="text2">이메일</text>
+      <input
+        id="username"
+        type="text"
+        placeholder="  이메일을 입력하세요"
+        size="40"
+      />
+      <text class="text3">비밀번호</text>
+      <input
+        id="password"
+        type="password"
+        placeholder="  비밀번호를 입력하세요"
+        size="40"
+      />
+      <text id="helpingText"></text>
+      <button id="submitLogin" type="submit">로그인</button>
+    </form>
+
+    <a class="signup" href="/users">회원가입</a>
+    <script type="module" src="/login/login.js"></script>
+  </body>
+</html>

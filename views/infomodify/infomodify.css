@@ -1,0 +1,375 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+* {
+  background-color: #f4f5f7;
+}
+
+header {
+  margin-top: 40px;
+}
+
+#mainTitle {
+  display: flex;
+  font-size: 32px;
+  font-family: "Noto Sans KR", sans-serif;
+  justify-content: center;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.dropdown {
+  height: 36px;
+  width: 36px;
+}
+
+.dropbtn img {
+  width: 100%;
+  height: 100%;
+}
+
+.menu-box {
+  position: absolute;
+  top: 85px;
+  left: 1100px;
+  width: 150px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  text-align: center;
+}
+
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  padding: 10px;
+}
+
+.menu-list li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.menu-list li a:hover {
+  background-color: #e9e9e9;
+}
+
+#profileImage {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  top: 36px;
+  left: 1196px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+hr {
+  width: 1000%;
+  height: 1px;
+  margin: auto;
+}
+
+main div {
+  display: flex;
+  position: absolute;
+}
+
+#text4 {
+  width: 176px;
+  height: 38px;
+  top: 265px;
+  left: 877px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38.19px;
+  text-align: center;
+}
+
+#text5 {
+  width: 77px;
+  height: 18px;
+  top: 315px;
+  left: 783px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+}
+
+#fileButton {
+  position: absolute;
+  width: 52px;
+  height: 27px;
+  line-height: 27px;
+  justify-content: center;
+  align-items: center;
+  top: 310px;
+  left: 935px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid white;
+  border-radius: 10px 10px 10px 10px;
+  background: #504f4f;
+}
+
+#text7 {
+  width: 39px;
+  height: 18px;
+  top: 540px;
+  left: 783px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+}
+
+#email {
+  width: 153px;
+  height: 17px;
+  top: 574px;
+  left: 783px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: left;
+}
+
+#text9 {
+  width: 39px;
+  height: 18px;
+  top: 607px;
+  left: 783px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+}
+
+#nicknameInput {
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 633px;
+  left: 783px;
+  gap: 0px;
+  border-radius: 4px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  border: 1px solid #000000;
+  align-items: center;
+  text-indent: 10px;
+}
+
+#nicknameHelper {
+  width: 155px;
+  height: 15px;
+  top: 673px;
+  left: 783px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  color: #ff0000;
+}
+
+#modifyButton {
+  position: absolute;
+  width: 355px;
+  height: 33px;
+  top: 693px;
+  left: 783px;
+  gap: 0px;
+  border-radius: 10px 10px 10px 10px;
+  opacity: 0px;
+  background: #aca0eb;
+  color: #ffffff;
+  text-align: center;
+  justify-content: center;
+  line-height: 33px;
+  border: none;
+}
+
+#toast {
+  position: absolute;
+  display: flex;
+  width: 102px;
+  height: 46px;
+  top: 832px;
+  left: 895px;
+  padding: 12px 20px 12px 20px;
+  gap: 0px;
+  border-radius: 30px 30px 30px 30px;
+  opacity: 0px;
+  background-color: #aca0eb;
+  color: #ffffff;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+}
+
+#toast.reveal {
+  visibility: visible;
+  opacity: 1;
+}
+
+#profileImageInput {
+  position: absolute;
+  width: 149px;
+  height: 149px;
+  top: 244px;
+  left: 885px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+#modalOpenButton {
+  position: absolute;
+  width: 327px;
+  height: 41px;
+  top: 726px;
+  left: 799px;
+  line-height: 41px;
+  text-align: center;
+  justify-content: center;
+  border: none;
+  background-color: none;
+}
+
+#modalOpenButton,
+#modalCloseButton {
+  cursor: pointer;
+}
+
+#modalContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContent {
+  position: absolute;
+  display: flex;
+  background-color: #ffffff;
+  width: 408px;
+  height: 242px;
+  padding: 15px;
+  z-index: 1000;
+}
+
+#modalContainer.hidden {
+  display: none;
+}
+
+#delete-title {
+  position: absolute;
+  top: 25px;
+  left: 95px;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.64px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#delete-content {
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23.87px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 19px;
+  margin-bottom: 33px;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+#modalCloseButton {
+  position: absolute;
+  width: 127px;
+  height: 44px;
+  top: 150px;
+  left: 50px;
+  gap: 0px;
+  border-radius: 10px 10px 10px 10px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23.87px;
+  text-align: center;
+  background-color: black;
+  color: #ffffff;
+}
+
+#agreeButton {
+  position: absolute;
+  top: 150px;
+  left: 200px;
+  width: 127px;
+  height: 44px;
+  gap: 0px;
+  border-radius: 10px 10px 10px 10px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23.87px;
+  text-align: center;
+  background: #c4a5fa;
+  color: black;
+  border: none;
+}

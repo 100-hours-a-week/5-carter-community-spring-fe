@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/boardwrite/boardwrite.css" />
+    <title>게시글 쓰기</title>
+  </head>
+  <body>
+    <header>
+      <button class="go-back" onclick="history.back()">&#60;</button>
+      <div id="mainTitle">아무 말 대잔치</div>
+      <div class="dropdown">
+        <div class="dropbtn" onclick="toggleDropdown()">
+          <img id="profileImage" src="" />
+        </div>
+        <div class="menu-box" id="menu-box">
+          <ul class="menu-list">
+            <li><a href="/users/infomodify">회원정보 수정</a></li>
+            <li><a href="/users/pwmodify">비밀번호 수정</a></li>
+            <li><a href="#" id="logout">로그아웃</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
+    </header>
+    <main>
+      <div id="title1">게시글 작성</div>
+      <div id="text1">제목*</div>
+      <hr id="hr1" />
+      <input
+        id="inputTitle"
+        placeholder="제목을 입력해주세요. (최대 26글자)"
+        maxlength="26"
+      />
+      <hr id="hr2" />
+      <div id="text3">내용*</div>
+      <hr id="hr3" />
+      <textarea id="inputContent" placeholder="내용을 입력하세요"></textarea>
+      <hr id="hr4" />
+      <div id="helperText">* 제목, 내용을 모두 작성해주세요</div>
+      <div id="text6">이미지</div>
+      <input type="file" id="fileInput" name="fileInput" accept="image/*" />
+
+      <div id="fileName">기존 파일 명</div>
+      <button id="completeButton" disabled>완료</button>
+    </main>
+    <script src="/boardwrite/boardwrite.js"></script>
+  </body>
+</html>

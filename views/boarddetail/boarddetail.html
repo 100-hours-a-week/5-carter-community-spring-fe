@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시글 상세 조회</title>
+    <link rel="stylesheet" href="/boarddetail//boarddetail.css" />
+  </head>
+  <body>
+    <header>
+      <button class="go-back" onclick="history.back()">&#60;</button>
+      <div id="mainTitle">아무 말 대잔치</div>
+      <div class="dropdown">
+        <div class="dropbtn" onclick="toggleDropdown()">
+          <img id="profileImage" src="" />
+        </div>
+        <div class="menu-box" id="menu-box">
+          <ul class="menu-list">
+            <li><a href="/users/infomodify">회원정보 수정</a></li>
+            <li><a href="/users/pwmodify">비밀번호 수정</a></li>
+            <li><a href="#" id="logout">로그아웃</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
+    </header>
+    <br />
+    <div id="postContainer">
+      <div id="postTitle"></div>
+      <div id="profileLine">
+        <img id="authorProfile" src="" />
+        <span id="authorName"></span>
+        <span id="postDate"></span>
+        <button class="smallButton" id="postModifyButton">수정</button>
+        <button class="smallButton" id="modalOpenButton">삭제</button>
+        <div id="modalContainer" class="hidden">
+          <div id="modalContent">
+            <div id="delete-title">게시글을 삭제하시겠습니까?</div>
+            <div id="delete-content">삭제한 내용은 복구할 수 없습니다.</div>
+            <div class="button-container">
+              <button id="modalCloseButton">취소</button>
+              <button id="agreeButton">확인</button>
+            </div>
+          </div>
+        </div>
+        <br /><br />
+      </div>
+      <hr />
+      <div id="postImage">
+        <img id="postImageSrc" src="" />
+      </div>
+      <div id="postContent"></div>
+      <div id="numbers">
+        <div id="viewsBox">
+          <div id="views"></div>
+          <div>조회수</div>
+        </div>
+        <div id="commentsBox">
+          <div id="comments"></div>
+          <div>댓글</div>
+        </div>
+      </div>
+    </div>
+    <div id="writeCommentContainer">
+      <hr />
+      <textarea id="commentInput" placeholder="댓글을 남겨주세요!"></textarea>
+      <button id="submitComment" disabled>댓글 등록</button>
+    </div>
+    <div id="commentContainer" class="commentContainer"></div>
+    <div id="cmodalContainer" class="hidden">
+      <div id="cmodalContent">
+        <div id="delete-title">댓글을 삭제하시겠습니까?</div>
+        <div id="delete-content">삭제한 내용은 복구할 수 없습니다.</div>
+        <div class="button-container">
+          <button id="cmodalCloseButton">취소</button>
+          <button id="cagreeButton">확인</button>
+        </div>
+      </div>
+    </div>
+    <script src="/boarddetail/boarddetail.js"></script>
+  </body>
+</html>
