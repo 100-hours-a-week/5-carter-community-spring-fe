@@ -114,7 +114,7 @@ emailInput.addEventListener("input", async () => {
     emailHelper.textContent =
       "*올바른 이메일 주소 형식을 입력해주세요. (예:example@example.com)";
   } else {
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/email/${email}`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/email/${email}`)
       .then((response) => response.json())
       .then((result) => {
         emailHelper.textContent = result.isDuplicate
@@ -137,7 +137,7 @@ nicknameInput.addEventListener("input", async () => {
   else if (nickname.length > 10)
     nicknameMessage.textContent = "* 닉네임은 최대 10자 까지 작성 가능합니다";
   else {
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/nickname/${nickname}`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname/${nickname}`)
       .then((response) => response.json())
       .then((result) => {
         nicknameMessage.textContent = result.isDuplicate
@@ -161,9 +161,9 @@ signupButton.addEventListener("click", async (event) => {
   formData.append("email", email);
   formData.append("nickname", nickname);
   formData.append("password", password);
-  formData.append("file", file);
+  formData.append("image", file);
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/users`, {
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/register`, {
     method: "POST",
     body: formData,
   })

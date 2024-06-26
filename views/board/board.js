@@ -12,7 +12,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,20 +51,36 @@ function displayPosts(posts) {
     const container = document.createElement("div");
     container.classList.add("my-box");
 
+    await fetchWrapper(
+      `${BACKEND_IP_PORT}/api/posts/${post.postId}/comments/count`,
+      {},
+    )
+      .then((response) => response.json())
+      .then((count) => {
+        post.count_comment = transformLikes(count);
+      });
+
     container.postId = post.postId;
     container.style.top = `calc(300px + ${index * 180}px)`;
 
-    const nickname = post.nickname;
+    let nickname;
+    await fetchWrapper(
+      `${BACKEND_IP_PORT}/api/users/${post.userId}/nickname`,
+      {},
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        nickname = data;
+      });
 
     let url;
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/${post.userId}/image`, {})
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${post.userId}/image`, {})
       .then((response) => response.blob())
       .then((blob) => {
         url = URL.createObjectURL(blob);
       });
 
     post.likes = transformLikes(post.likes);
-    post.count_comment = transformLikes(post.comment_count);
     post.views = transformLikes(post.views);
 
     container.innerHTML = `
@@ -84,14 +100,14 @@ function displayPosts(posts) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/image`, {})
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
     });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts`, {})
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts`, {})
     .then((response) => response.json())
     .then((data) => {
       displayPosts(data);

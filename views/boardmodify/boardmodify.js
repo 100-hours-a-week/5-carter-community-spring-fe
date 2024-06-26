@@ -19,7 +19,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,14 +62,14 @@ function getPostIdFromUrl() {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
     });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`)
     .then((response) => response.json())
     .then((post) => {
       inputTitle.value = post.title;
@@ -107,8 +107,8 @@ completeButton.addEventListener("click", async () => {
   formData.append("title", title);
   formData.append("content", content);
   formData.append("file", fileInput);
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}`, {
-    method: "POST",
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {
+    method: "PUT",
     body: formData,
   });
   window.location.href = `/posts/detail/:${postId}`;

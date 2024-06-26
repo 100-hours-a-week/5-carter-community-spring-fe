@@ -28,7 +28,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,10 @@ function toast(string) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/image`, {});
+    const response = await fetchWrapper(
+      `${BACKEND_IP_PORT}/api/users/image`,
+      {},
+    );
     if (!response.ok) {
       throw new Error("이미지를 가져오는데 실패했습니다.");
     }
@@ -82,15 +85,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching user image:", error);
   }
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/nickname`)
-    .then((response) => response.json())
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname`)
+    .then((response) => response.text())
     .then((nickname) => {
       nicknameInput.value = nickname;
       prevNickname = nickname;
     });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/email`)
-    .then((response) => response.json())
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/email`)
+    .then((response) => response.text())
     .then((email) => {
       emailDisplay.textContent = email;
     });
@@ -108,7 +111,7 @@ nicknameInput.addEventListener("input", async () => {
   else if (nickname.length > 10)
     nicknameHelper.textContent = "* 닉네임은 최대 10자 까지 작성 가능합니다";
   else if (nickname !== prevNickname) {
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/nickname/${nickname}`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname/${nickname}`)
       .then((response) => response.json())
       .then((result) => {
         if (result.isDuplicate) {
@@ -128,9 +131,9 @@ modifyButton.addEventListener("click", async () => {
 
   const formData = new FormData();
   formData.append("nickname", nickname);
-  formData.append("file", file);
-  fetchWrapper(`${BACKEND_IP_PORT}/users`, {
-    method: "PATCH",
+  formData.append("image", file);
+  fetchWrapper(`${BACKEND_IP_PORT}/api/users/profile`, {
+    method: "PUT",
     body: formData,
   });
   toast("수정완료");
@@ -146,7 +149,7 @@ modalCloseButton.addEventListener("click", () => {
 });
 
 agreeButton.addEventListener("click", () => {
-  fetchWrapper(`${BACKEND_IP_PORT}/users`, {
+  fetchWrapper(`${BACKEND_IP_PORT}/api/users`, {
     method: "DELETE",
   })
     .then((response) => {

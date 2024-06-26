@@ -1,41 +1,55 @@
-const BACKEND_IP_PORT = "http://localhost:8081";
-
-const form = document.getElementById("loginForm");
-const emailInput = document.getElementById("username");
-const passwordInput = document.getElementById("password");
-const helperText = document.getElementById("helpingText");
-
-const loginButton = document.getElementById("submitLogin");
-
-async function validateAccount() {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const data = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email, password: password }),
-    credentials: "include",
-  };
-
-  const response = await fetch(`${BACKEND_IP_PORT}/users/login`, data);
-  const auth = await response.json();
-  return auth.user.id;
+async function fetchConfig() {
+  const response = await fetch("/config");
+  const config = await response.json();
+  return config.BACKEND_IP_PORT;
 }
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+document.addEventListener("DOMContentLoaded", async () => {
+  const BACKEND_IP_PORT = await fetchConfig();
 
-  validateAccount().then((id) => {
-    if (id) {
-      loginButton.style.backgroundColor = "#7F6AEE";
+  const form = document.getElementById("loginForm");
+  const emailInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const helperText = document.getElementById("helpingText");
+  const loginButton = document.getElementById("submitLogin");
 
-      setTimeout(() => {
-        window.location.href = "/posts";
-      }, 3000);
-    } else {
-      helperText.textContent = "* 입력하신 계정 정보가 정확하지 않았습니다.";
+  async function validateAccount() {
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const data = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_IP_PORT}/api/auth/login`, data);
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      return true;
+    } catch (error) {
+      console.error("Error:", error);
+      return false;
     }
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    validateAccount().then((result) => {
+      if (result) {
+        loginButton.style.backgroundColor = "#7F6AEE";
+
+        setTimeout(() => {
+          window.location.href = "/posts";
+        }, 3000);
+      } else {
+        helperText.textContent = "* 입력하신 계정 정보가 정확하지 않았습니다.";
+      }
+    });
   });
 });

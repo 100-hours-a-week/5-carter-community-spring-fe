@@ -17,7 +17,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const pwInputChange = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
@@ -129,8 +129,8 @@ modifyButton.addEventListener("click", async () => {
     password: password,
   };
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/password`, {
-    method: "PATCH",
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/password`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });

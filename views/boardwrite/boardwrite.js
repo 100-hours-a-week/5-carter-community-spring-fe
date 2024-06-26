@@ -18,7 +18,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function checkTitleContent() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  fetchWrapper(`${BACKEND_IP_PORT}/users/image`)
+  fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
@@ -84,9 +84,9 @@ completeButton.addEventListener("click", async () => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
-  formData.append("file", file);
+  formData.append("image", file);
 
-  fetchWrapper(`${BACKEND_IP_PORT}/posts`, {
+  fetchWrapper(`${BACKEND_IP_PORT}/api/posts`, {
     method: "POST",
     body: formData,
   })

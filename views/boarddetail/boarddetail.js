@@ -32,7 +32,7 @@ const fetchWrapper = (url, options = {}) => {
 
 const logout = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/logout`, {
+    const response = await fetchWrapper(`${BACKEND_IP_PORT}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,15 +51,12 @@ const logout = async () => {
 
 const getUserId = async () => {
   try {
-    const response = await fetchWrapper(`${BACKEND_IP_PORT}/users/userId`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWrapper(
+      `${BACKEND_IP_PORT}/api/users/userId`,
+      {},
+    );
     if (response.ok) {
-      const data = await response.json();
-      return data.userId;
+      return await response.json();
     } else {
       throw new Error("Failed to fetch user ID");
     }
@@ -71,6 +68,7 @@ const getUserId = async () => {
 
 async function postAuth() {
   const userId = await getUserId();
+  console.log(userId, authorId);
   return parseInt(userId) === parseInt(authorId);
 }
 
@@ -107,30 +105,33 @@ async function displayPostDetail(data) {
   postDate.textContent = data.date;
   postContent.textContent = data.content;
   views.textContent = transformNumber(data.views);
-  authorName.textContent = data.nickname;
-
-  comments.textContent = transformNumber(data.comment_count);
   authorId = data.userId;
+  await fetchWrapper(
+    `${BACKEND_IP_PORT}/api/posts/${data.postId}/comments/count`,
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      comments.textContent = transformNumber(data);
+    });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/${authorId}/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/nickname`)
+    .then((response) => response.text())
+    .then((data) => {
+      authorName.textContent = data;
+    });
+
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       authorProfile.src = url;
     });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       postImageSrc.src = url;
-    });
-
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/${authorId}/image`)
-    .then((response) => response.blob())
-    .then((blob) => {
-      const url = URL.createObjectURL(blob);
-      authorProfile.src = url;
     });
 }
 
@@ -147,13 +148,13 @@ async function displayComments(data) {
     let nickname;
     let imageUrl;
 
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/${reply.userId}/nickname`)
-      .then((response) => response.json())
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/nickname`)
+      .then((response) => response.text())
       .then((data) => {
         nickname = data;
       });
 
-    await fetchWrapper(`${BACKEND_IP_PORT}/users/${reply.userId}/image`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/image`)
       .then((response) => response.blob())
       .then((blob) => {
         const url = URL.createObjectURL(blob);
@@ -222,32 +223,32 @@ async function displayComments(data) {
 
   cagreeButton.addEventListener("click", () => {
     location.reload();
-    fetchWrapper(`${BACKEND_IP_PORT}/posts/comments/${commentToDeleteId}`, {
+    fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${commentToDeleteId}`, {
       method: "DELETE",
     });
   });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchWrapper(`${BACKEND_IP_PORT}/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
     });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}/increment-view`, {
-    method: "PATCH",
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}/increment-view`, {
+    method: "PUT",
   });
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`)
     .then((response) => response.json())
     .then((data) => {
       displayPostDetail(data);
     })
     .catch((error) => console.error("Error fetching posts:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/posts/comments/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${postId}`)
     .then((response) => response.json())
     .then((data) => {
       displayComments(data);
@@ -274,7 +275,7 @@ modalCloseButton.addEventListener("click", () => {
 
 const agreeButton = document.getElementById("agreeButton");
 agreeButton.addEventListener("click", async function () {
-  fetchWrapper(`${BACKEND_IP_PORT}/posts/${postId}`, {
+  fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {
     method: "DELETE",
   });
   window.location.href = "/posts";
@@ -298,7 +299,7 @@ submitCommentButton.addEventListener("click", async () => {
       postId: postId,
       content: inputComment.value,
     };
-    await fetchWrapper(`${BACKEND_IP_PORT}/posts/comments`, {
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/comments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -306,16 +307,13 @@ submitCommentButton.addEventListener("click", async () => {
       body: JSON.stringify(data),
     });
   } else if (submitCommentButton.textContent === "댓글 수정") {
-    await fetchWrapper(
-      `${BACKEND_IP_PORT}/posts/comments/${selectedCommentId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: inputComment.value }),
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${selectedCommentId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ content: inputComment.value }),
+    });
   }
 });
 
