@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok) {
         throw new Error("Login failed");
       }
+      const token = await response.json();
+      localStorage.setItem("accessToken", token.accessToken);
+      document.cookie = `refreshToken=${token.refreshToken}; HttpOnly; Secure`;
       return true;
     } catch (error) {
       console.error("Error:", error);
