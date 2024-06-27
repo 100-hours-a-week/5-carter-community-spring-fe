@@ -117,9 +117,7 @@ emailInput.addEventListener("input", async () => {
     await fetchWrapper(`${BACKEND_IP_PORT}/api/users/email/${email}`)
       .then((response) => response.json())
       .then((result) => {
-        emailHelper.textContent = result.isDuplicate
-          ? "*중복된 이메일입니다."
-          : "";
+        emailHelper.textContent = result ? "*중복된 이메일입니다." : "";
       });
   }
   checkMessages();
@@ -140,9 +138,7 @@ nicknameInput.addEventListener("input", async () => {
     await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname/${nickname}`)
       .then((response) => response.json())
       .then((result) => {
-        nicknameMessage.textContent = result.isDuplicate
-          ? "* 중복된 닉네임입니다."
-          : "";
+        nicknameMessage.textContent = result ? "* 중복된 닉네임입니다." : "";
       });
   }
 
