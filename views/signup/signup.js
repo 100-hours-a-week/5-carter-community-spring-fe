@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const profileInput = document.getElementById("fileInput");
 const profileMessage = document.getElementById("profileHelpingText");

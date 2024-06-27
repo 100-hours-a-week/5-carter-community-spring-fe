@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const mainTitle = document.getElementById("mainTitle");
 
@@ -59,7 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 });
 
 document.getElementById("logout").addEventListener("click", (event) => {

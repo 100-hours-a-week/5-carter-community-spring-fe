@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const profileImage = document.getElementById("profileImage");
 const writeButton = document.getElementById("writeButton");
@@ -49,7 +49,12 @@ function displayPosts(posts) {
   const postContainer = document.getElementById("post-container");
   posts.forEach(async (post, index) => {
     const container = document.createElement("div");
+
     container.classList.add("my-box");
+    container.postId = post.postId;
+    container.style.top = `calc(300px + ${index * 180}px)`;
+    post.likes = transformLikes(post.likes);
+    post.views = transformLikes(post.views);
 
     await fetchWrapper(
       `${BACKEND_IP_PORT}/api/posts/${post.postId}/comments/count`,
@@ -58,10 +63,8 @@ function displayPosts(posts) {
       .then((response) => response.json())
       .then((count) => {
         post.count_comment = transformLikes(count);
-      });
-
-    container.postId = post.postId;
-    container.style.top = `calc(300px + ${index * 180}px)`;
+      })
+      .catch((error) => console.error("Error fetching count:", error));
 
     let nickname;
     await fetchWrapper(
@@ -71,17 +74,16 @@ function displayPosts(posts) {
       .then((response) => response.text())
       .then((data) => {
         nickname = data;
-      });
+      })
+      .catch((error) => console.error("Error fetching nickname:", error));
 
     let url;
     await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${post.userId}/image`, {})
       .then((response) => response.blob())
       .then((blob) => {
         url = URL.createObjectURL(blob);
-      });
-
-    post.likes = transformLikes(post.likes);
-    post.views = transformLikes(post.views);
+      })
+      .catch((error) => console.error("Error fetching image:", error));
 
     container.innerHTML = `
       <div class="title">${post.title}</div>
@@ -105,7 +107,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 
   await fetchWrapper(`${BACKEND_IP_PORT}/api/posts`, {})
     .then((response) => response.json())

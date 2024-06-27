@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const mainTitle = document.getElementById("mainTitle");
 
@@ -68,7 +68,6 @@ const getUserId = async () => {
 
 async function postAuth() {
   const userId = await getUserId();
-  console.log(userId, authorId);
   return parseInt(userId) === parseInt(authorId);
 }
 
@@ -106,33 +105,39 @@ async function displayPostDetail(data) {
   postContent.textContent = data.content;
   views.textContent = transformNumber(data.views);
   authorId = data.userId;
+
   await fetchWrapper(
     `${BACKEND_IP_PORT}/api/posts/${data.postId}/comments/count`,
+    {},
   )
     .then((response) => response.json())
     .then((data) => {
       comments.textContent = transformNumber(data);
-    });
+    })
+    .catch((error) => console.error("Error fetching count:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/nickname`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/nickname`, {})
     .then((response) => response.text())
     .then((data) => {
       authorName.textContent = data;
-    });
+    })
+    .catch((error) => console.error("Error fetching nickname:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${authorId}/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       authorProfile.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       postImageSrc.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 }
 
 async function displayComments(data) {
@@ -148,18 +153,23 @@ async function displayComments(data) {
     let nickname;
     let imageUrl;
 
-    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/nickname`)
+    await fetchWrapper(
+      `${BACKEND_IP_PORT}/api/users/${reply.userId}/nickname`,
+      {},
+    )
       .then((response) => response.text())
       .then((data) => {
         nickname = data;
-      });
+      })
+      .catch((error) => console.error("Error fetching nickname:", error));
 
-    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/image`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/image`, {})
       .then((response) => response.blob())
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         imageUrl = url;
-      });
+      })
+      .catch((error) => console.error("Error fetching image:", error));
 
     container.innerHTML = `
       <div id="commentsContainer">
@@ -225,35 +235,36 @@ async function displayComments(data) {
     location.reload();
     fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${commentToDeleteId}`, {
       method: "DELETE",
-    });
+    }).catch((error) => console.error("Error deleting comment :", error));
   });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 
   await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}/increment-view`, {
     method: "PUT",
-  });
+  }).catch((error) => console.error("Error increasing view :", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {})
     .then((response) => response.json())
     .then((data) => {
       displayPostDetail(data);
     })
     .catch((error) => console.error("Error fetching posts:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${postId}`, {})
     .then((response) => response.json())
     .then((data) => {
       displayComments(data);
     })
-    .catch((error) => console.error("Error fetching data:", error));
+    .catch((error) => console.error("Error fetching comments:", error));
 });
 
 document.getElementById("logout").addEventListener("click", (event) => {
@@ -277,7 +288,7 @@ const agreeButton = document.getElementById("agreeButton");
 agreeButton.addEventListener("click", async function () {
   fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {
     method: "DELETE",
-  });
+  }).catch((error) => console.error("Error deleting post :", error));
   window.location.href = "/posts";
 });
 
@@ -305,7 +316,7 @@ submitCommentButton.addEventListener("click", async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    });
+    }).catch((error) => console.error("Error posting comment :", error));
   } else if (submitCommentButton.textContent === "댓글 수정") {
     await fetchWrapper(`${BACKEND_IP_PORT}/api/comments/${selectedCommentId}`, {
       method: "PUT",
@@ -313,7 +324,7 @@ submitCommentButton.addEventListener("click", async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ content: inputComment.value }),
-    });
+    }).catch((error) => console.error("Error updating comment :", error));
   }
 });
 

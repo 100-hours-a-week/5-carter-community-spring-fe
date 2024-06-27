@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const mainTitle = document.getElementById("mainTitle");
 const emailDisplay = document.getElementById("email");
@@ -85,18 +85,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching user image:", error);
   }
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname`, {})
     .then((response) => response.text())
     .then((nickname) => {
       nicknameInput.value = nickname;
       prevNickname = nickname;
-    });
+    })
+    .catch((error) => console.error("Error fetching nickname:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/email`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/email`, {})
     .then((response) => response.text())
     .then((email) => {
       emailDisplay.textContent = email;
-    });
+    })
+    .catch((error) => console.error("Error fetching email:", error));
 });
 
 document.getElementById("logout").addEventListener("click", (event) => {
@@ -111,7 +113,7 @@ nicknameInput.addEventListener("input", async () => {
   else if (nickname.length > 10)
     nicknameHelper.textContent = "* 닉네임은 최대 10자 까지 작성 가능합니다";
   else if (nickname !== prevNickname) {
-    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname/${nickname}`)
+    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/nickname/${nickname}`, {})
       .then((response) => response.json())
       .then((result) => {
         if (result.isDuplicate) {
@@ -121,7 +123,8 @@ nicknameInput.addEventListener("input", async () => {
           modifyButton.disabled = false;
           modifyButton.style.backgroundColor = "#7F6AEE";
         }
-      });
+      })
+      .catch((error) => console.error("Error fetching request:", error));
   }
 });
 
@@ -132,10 +135,10 @@ modifyButton.addEventListener("click", async () => {
   const formData = new FormData();
   formData.append("nickname", nickname);
   formData.append("image", file);
-  fetchWrapper(`${BACKEND_IP_PORT}/api/users/profile`, {
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/profile`, {
     method: "PUT",
     body: formData,
-  });
+  }).catch((error) => console.error("Error updating profile :", error));
   toast("수정완료");
   userNickname = nickname;
 });

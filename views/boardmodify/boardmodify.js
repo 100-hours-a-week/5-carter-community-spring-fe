@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const mainTitle = document.getElementById("mainTitle");
 
@@ -62,20 +62,22 @@ function getPostIdFromUrl() {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {})
     .then((response) => response.json())
     .then((post) => {
       inputTitle.value = post.title;
       inputContent.value = post.content;
       checkTitleContent();
-    });
+    })
+    .catch((error) => console.error("Error fetching post:", error));
 });
 
 document.getElementById("logout").addEventListener("click", (event) => {
@@ -110,7 +112,7 @@ completeButton.addEventListener("click", async () => {
   await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {
     method: "PUT",
     body: formData,
-  });
+  }).catch((error) => console.error("Error updating post :", error));
   window.location.href = `/posts/detail/:${postId}`;
 });
 

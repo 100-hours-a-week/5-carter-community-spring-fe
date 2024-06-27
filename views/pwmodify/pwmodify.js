@@ -1,4 +1,4 @@
-BACKEND_IP_PORT = localStorage.getItem("backend-ip-port");
+BACKEND_IP_PORT = localStorage.getItem("BACKEND_IP_PORT");
 
 const mainTitle = document.getElementById("mainTitle");
 
@@ -106,12 +106,13 @@ const pwInputChange = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`)
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       profileImage.src = url;
-    });
+    })
+    .catch((error) => console.error("Error fetching image:", error));
 });
 
 document.getElementById("logout").addEventListener("click", (event) => {
@@ -133,7 +134,7 @@ modifyButton.addEventListener("click", async () => {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  });
+  }).catch((error) => console.error("Error updating password :", error));
   toast("수정완료");
 });
 

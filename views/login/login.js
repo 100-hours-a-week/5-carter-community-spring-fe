@@ -1,6 +1,7 @@
 async function fetchConfig() {
   const response = await fetch("/config");
   const config = await response.json();
+  localStorage.setItem("BACKEND_IP_PORT", config.BACKEND_IP_PORT);
   return config.BACKEND_IP_PORT;
 }
 
