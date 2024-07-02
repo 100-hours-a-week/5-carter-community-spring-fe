@@ -148,8 +148,8 @@ header {
   height: 28px;
   gap: 0px;
   opacity: 0px;
-  color: #000000;
-  background-color: #ffffff;
+  color: white;
+  background-color: grey;
   font-family: Pretendard;
   font-size: 15px;
   font-weight: 400;
