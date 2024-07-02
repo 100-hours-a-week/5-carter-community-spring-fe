@@ -23,7 +23,7 @@ community
 |        | --- userRouter.js  // 유저 관련 페이지 라우터
 |        | --- postRouter.js  // 게시글 관련 페이지 라우터
 |
-| --- view  // 각 하위폴더에 .html, .css, .js 파일
+| --- views  // 각 하위폴더에 .html, .css, .js 파일
 |        | 
 |        | --- board
 |        | --- boarddetail
