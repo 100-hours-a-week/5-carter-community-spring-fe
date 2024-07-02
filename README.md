@@ -8,6 +8,10 @@
 
 [Backend Server](https://github.com/100-hours-a-week/5-carter-community-spring-be)
 
+#### DEMO
+
+[![Video Label](http://img.youtube.com/vi/0rVGNgWae5Y/0.jpg)](https://youtu.be/0rVGNgWae5Y)
+
 #### 폴더 구조
 
 ```java
