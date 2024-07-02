@@ -145,7 +145,7 @@ async function displayPosts(posts) {
         url = URL.createObjectURL(blob);
       } catch (error) {
         console.error("Error fetching image:", error);
-        url = "/path/to/default/image.png"; // Default image in case of error
+        url = "/boardimage"; // Default image in case of error
       }
 
       container.innerHTML = `
