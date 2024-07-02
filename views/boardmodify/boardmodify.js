@@ -147,7 +147,7 @@ completeButton.addEventListener("click", async () => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
-  formData.append("file", fileInput);
+  formData.append("image", fileInput);
   await fetchWrapper(`${BACKEND_IP_PORT}/api/posts/${postId}`, {
     method: "PUT",
     body: formData,
