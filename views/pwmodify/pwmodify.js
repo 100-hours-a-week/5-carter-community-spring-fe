@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -46,7 +46,7 @@ async function refreshAccessToken() {
   }
 }
 
-const mainTitle = document.getElementById("mainTitle");
+const board = document.getElementById("board");
 
 const passwordInput = document.getElementById("passwordInput");
 const passwordMessage = document.getElementById("passwordHelper");
@@ -85,10 +85,10 @@ function checkMessages() {
 
   if (m1 || m2) {
     modifyButton.disabled = true;
-    modifyButton.style.backgroundColor = "#ACA0EB";
+    modifyButton.style.backgroundColor = "#FFA500";
   } else {
     modifyButton.disabled = false;
-    modifyButton.style.backgroundColor = "#7F6AEE";
+    modifyButton.style.backgroundColor = "#FF8C00";
   }
 }
 
@@ -177,6 +177,6 @@ modifyButton.addEventListener("click", async () => {
   toast("수정완료");
 });
 
-mainTitle.addEventListener("click", () => {
+board.addEventListener("click", () => {
   window.location.href = "/posts/";
 });

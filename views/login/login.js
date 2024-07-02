@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     validateAccount().then((result) => {
       if (result) {
-        loginButton.style.backgroundColor = "#7F6AEE";
+        loginButton.style.backgroundColor = "#FF6F00";
 
         setTimeout(() => {
           window.location.href = "/posts";
         }, 3000);
       } else {
-        helperText.textContent = "* 입력하신 계정 정보가 정확하지 않았습니다.";
+        helperText.textContent = "* 입력하신 계정 정보가 정확하지 않습니다.";
       }
     });
   });

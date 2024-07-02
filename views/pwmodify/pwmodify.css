@@ -1,20 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-* {
-  background-color: #f4f5f7;
+body {
+  background: linear-gradient(to right, #81d4fa 0%, #a5d6a7 50%, #81d4fa 100%);
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header {
-  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: center;
+  margin: 50px;
+}
+
+#board {
+  width: 50px;
+  height: 50px;
 }
 
 #mainTitle {
-  display: flex;
   font-size: 32px;
-  font-family: "Noto Sans KR", sans-serif;
-  justify-content: center;
+  font-family: "Oswald", sans-serif;
   font-weight: 400;
   line-height: 32px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .dropdown {
@@ -27,7 +43,7 @@ header {
 }
 
 .menu-box {
-  position: absolute;
+  /* position: absolute; */
   top: 85px;
   left: 1100px;
   width: 150px;
@@ -58,19 +74,12 @@ header {
 }
 
 #profileImage {
-  position: absolute;
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 50px;
   top: 36px;
   left: 1196px;
   gap: 0px;
   opacity: 0px;
-}
-
-hr {
-  width: 1000%;
-  height: 1px;
-  margin: auto;
 }
 
 #text1 {
@@ -99,22 +108,6 @@ hr {
   font-weight: 700;
   line-height: 17.9px;
   text-align: left;
-}
-
-#passwordInput {
-  position: absolute;
-  width: 355px;
-  height: 33px;
-  top: 423px;
-  left: 783px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  border: 1px 0px 0px 0px;
-  opacity: 0px;
-  border: 1px solid #000000;
-  line-height: 33px;
-  align-items: center;
-  text-indent: 10px;
 }
 
 #passwordHelper {
@@ -146,20 +139,14 @@ hr {
   text-align: left;
 }
 
-#confirmInput {
-  position: absolute;
+input {
   width: 355px;
   height: 33px;
-  top: 505px;
-  left: 783px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  border: 1px 0px 0px 0px;
-  opacity: 0px;
-  border: 1px solid #000000;
-  line-height: 33px;
-  align-items: center;
-  text-indent: 10px;
+  border-radius: 10px;
+  border: 2px solid blue;
+  padding-left: 10px;
+  margin: 5px;
+  box-sizing: border-box;
 }
 
 #confirmPasswordHelper {
@@ -178,41 +165,39 @@ hr {
 }
 
 #modifyButton {
-  position: absolute;
-  display: flex;
-  width: 360px;
+  width: 355px;
   height: 33px;
-  top: 576px;
-  left: 783px;
   gap: 0px;
-  border-radius: 4px 4px 4px 4px;
+  border-radius: 10px 10px 10px 10px;
   opacity: 0px;
-  background: #aca0eb;
+  background: #ffa500;
   color: #ffffff;
-  line-height: 33px;
+  text-align: center;
   justify-content: center;
-  align-items: center;
+  line-height: 33px;
   border: none;
+  margin: 5px;
 }
 
 #toast {
-  position: absolute;
+  position: fixed; /* 화면에 고정 */
+  bottom: 200px; /* 화면 하단에서 200px 위 */
+  left: 50%; /* 화면의 가로 중앙 */
+  transform: translateX(-50%); /* 가로 중앙 정렬 */
   display: flex;
-  width: 102px;
-  height: 46px;
-  top: 832px;
-  left: 895px;
-  padding: 12px 20px 12px 20px;
-  gap: 0px;
-  border-radius: 30px 30px 30px 30px;
-  opacity: 0px;
-  background-color: #aca0eb;
-  color: #ffffff;
-  opacity: 0;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  width: auto; /* 내용에 맞게 크기 조정 */
+  padding: 12px 20px;
+  border-radius: 30px;
+  background-color: #ff8c00;
+  color: #ffffff;
   font-size: 18px;
+  opacity: 0; /* 처음에 보이지 않도록 설정 */
+  visibility: hidden; /* 처음에 보이지 않도록 설정 */
+  transition:
+    opacity 0.5s,
+    visibility 0.5s; /* 부드러운 전환 효과 */
 }
 
 #toast.reveal {
@@ -220,7 +205,13 @@ hr {
   opacity: 1;
 }
 
-main div {
+main {
   display: flex;
-  position: absolute;
+  flex-direction: column;
+  margin: 200px;
+  margin-bottom: 50px;
+  width: 355px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
 }

@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -84,63 +84,111 @@ function transformLikes(number) {
   } else return number;
 }
 
-function displayPosts(posts) {
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+}
+
+async function displayPosts(posts) {
   const postContainer = document.getElementById("post-container");
-  posts.forEach(async (post, index) => {
-    const container = document.createElement("div");
 
-    container.classList.add("my-box");
-    container.postId = post.postId;
-    container.style.top = `calc(300px + ${index * 180}px)`;
-    post.likes = transformLikes(post.likes);
-    post.views = transformLikes(post.views);
+  const sortedPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    await fetchWrapper(
-      `${BACKEND_IP_PORT}/api/posts/${post.postId}/comments/count`,
-      {},
-    )
-      .then((response) => response.json())
-      .then((count) => {
+  const postElements = await Promise.all(
+    sortedPosts.map(async (post, index) => {
+      const container = document.createElement("div");
+
+      container.classList.add("my-box");
+      container.postId = post.postId;
+      post.likes = transformLikes(post.likes);
+      post.views = transformLikes(post.views);
+
+      try {
+        const countResponse = await fetchWrapper(
+          `${BACKEND_IP_PORT}/api/posts/${post.postId}/comments/count`,
+          {},
+        );
+        const count = await countResponse.json();
         post.count_comment = transformLikes(count);
-      })
-      .catch((error) => console.error("Error fetching count:", error));
+      } catch (error) {
+        console.error("Error fetching count:", error);
+        post.count_comment = "0";
+      }
 
-    let nickname;
-    await fetchWrapper(
-      `${BACKEND_IP_PORT}/api/users/${post.userId}/nickname`,
-      {},
-    )
-      .then((response) => response.text())
-      .then((data) => {
-        nickname = data;
-      })
-      .catch((error) => console.error("Error fetching nickname:", error));
+      let nickname;
+      try {
+        const nicknameResponse = await fetchWrapper(
+          `${BACKEND_IP_PORT}/api/users/${post.userId}/nickname`,
+          {},
+        );
+        nickname = await nicknameResponse.text();
+      } catch (error) {
+        console.error("Error fetching nickname:", error);
+        nickname = "Unknown";
+      }
 
-    let url;
-    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${post.userId}/image`, {})
-      .then((response) => response.blob())
-      .then((blob) => {
+      let url;
+      try {
+        const imageResponse = await fetchWrapper(
+          `${BACKEND_IP_PORT}/api/users/${post.userId}/image`,
+          {},
+        );
+        const blob = await imageResponse.blob();
         url = URL.createObjectURL(blob);
-      })
-      .catch((error) => console.error("Error fetching image:", error));
+      } catch (error) {
+        console.error("Error fetching image:", error);
+        url = "/path/to/default/image.png"; // Default image in case of error
+      }
 
-    container.innerHTML = `
+      container.innerHTML = `
       <div class="title">${post.title}</div>
       <div class="like">좋아요 ${post.likes} 댓글 ${post.count_comment} 조회수 ${post.views}</div>
-      <div class="date">${post.date}</div>
+      <div class="date">${formatDate(post.date)}</div>
       <hr />
       <div class="user"><img class="profile" src="${url}" /> <div class="author">${nickname}</div></div>
     `;
 
-    container.addEventListener("click", async () => {
-      window.location.href = `/posts/detail/:${container.postId}`;
-    });
+      container.addEventListener("click", async () => {
+        window.location.href = `/posts/detail/:${container.postId}`;
+      });
 
+      return container;
+    }),
+  );
+
+  // 모든 비동기 작업이 완료된 후에 DOM에 추가
+  postElements.forEach((container) => {
     postContainer.appendChild(container);
   });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    function adjustOverlayHeight() {
+      const body = document.body;
+      const html = document.documentElement;
+      const height = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight,
+      );
+      document.getElementById("overlay").style.height = `${height}px`;
+    }
+
+    window.addEventListener("load", adjustOverlayHeight);
+    window.addEventListener("resize", adjustOverlayHeight);
+  });
+
   await fetchWrapper(`${BACKEND_IP_PORT}/api/users/image`, {})
     .then((response) => response.blob())
     .then((blob) => {
@@ -162,8 +210,6 @@ document.getElementById("logout").addEventListener("click", (event) => {
   logout();
 });
 
-writeButton.onmouseover = () => (writeButton.style.backgroundColor = "#7F6AEE");
-writeButton.onmouseout = () => (writeButton.style.backgroundColor = "#ACA0EB");
 writeButton.addEventListener("click", () => {
   window.location.href = `/posts/register`;
 });

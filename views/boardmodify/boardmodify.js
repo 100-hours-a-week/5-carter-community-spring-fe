@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -46,7 +46,7 @@ async function refreshAccessToken() {
   }
 }
 
-const mainTitle = document.getElementById("mainTitle");
+const board = document.getElementById("board");
 
 const cButton = document.getElementById("completeButton");
 const helperText = document.getElementById("helperText");
@@ -85,11 +85,11 @@ function checkTitleContent() {
   const inputTitle = document.getElementById("inputTitle");
   const inputContent = document.getElementById("inputContent");
   if (inputTitle.value !== "" && inputContent.value !== "") {
-    cButton.style.backgroundColor = "#7F6AEE";
+    cButton.style.backgroundColor = "#FF8C00";
     completeButton.disabled = false;
     helperText.textContent = "";
   } else {
-    cButton.style.backgroundColor = "#ACA0EB";
+    cButton.style.backgroundColor = "#FFA500";
     completeButton.disabled = true;
     helperText.textContent = "* 제목, 내용을 모두 작성해주세요";
   }
@@ -155,6 +155,6 @@ completeButton.addEventListener("click", async () => {
   window.location.href = `/posts/detail/:${postId}`;
 });
 
-mainTitle.addEventListener("click", () => {
+board.addEventListener("click", () => {
   window.location.href = "/posts/";
 });

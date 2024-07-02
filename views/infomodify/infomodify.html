@@ -8,7 +8,8 @@
   </head>
   <body>
     <header>
-      <div id="mainTitle">아무 말 대잔치</div>
+      <img id="board" src="/boardimage" />
+      <div id="mainTitle">Talk Talk Playground</div>
       <div class="dropdown">
         <div class="dropbtn" onclick="toggleDropdown()">
           <img id="profileImage" src="" />
@@ -21,12 +22,10 @@
           </ul>
         </div>
       </div>
-      <hr />
     </header>
     <main>
-      <div id="text4">회원정보수정</div>
-      <div id="text5">프로필사진*</div>
-      <div class="container">
+      <div id="text5">Profile Image</div>
+      <div id="container">
         <img id="profileImageInput" src="" />
         <input
           type="file"
@@ -36,14 +35,19 @@
         />
         <button id="fileButton">변경</button>
       </div>
-      <div id="text7">이메일</div>
+      <div id="text7">Email</div>
       <div id="email"></div>
-      <div id="text9">닉네임</div>
+      <div id="text9">Nickname</div>
       <input id="nicknameInput" />
       <div id="nicknameHelper"></div>
       <button id="modifyButton">수정하기</button>
 
-      <button id="modalOpenButton">회원 탈퇴</button>
+      
+      </div>
+      <div id="toast"></div>
+      
+    </main>
+    <button id="modalOpenButton">회원 탈퇴</button>
       <div id="modalContainer" class="hidden">
         <div id="modalContent">
           <br />
@@ -54,10 +58,7 @@
             <button id="agreeButton">확인</button>
           </div>
         </div>
-      </div>
 
-      <div id="toast"></div>
-    </main>
     <script src="/infomodify/infomodify.js"></script>
   </body>
 </html>

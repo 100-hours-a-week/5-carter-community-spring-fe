@@ -1,39 +1,43 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-hr {
-  width: 1000%;
-  height: 1px;
-  margin: auto;
+body {
+  background: linear-gradient(to right, #81d4fa 0%, #a5d6a7 50%, #81d4fa 100%);
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
-  display: flex;
   font-size: 32px;
-  font-family: "Noto Sans KR", sans-serif;
-  justify-content: center;
+  font-family: "Oswald", sans-serif;
   font-weight: 400;
   line-height: 32px;
-}
-
-.text1 {
-  position: absolute;
-  width: 111px;
-  height: 38px;
-  top: 265px;
-  left: 905px;
-  gap: 0px;
-  opacity: 0px;
-  display: flex;
-  font-family: Pretendard;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 38.19px;
+  color: #2e7d32;
+  margin-bottom: 20px;
   text-align: center;
 }
 
+#signupForm {
+  display: flex;
+  flex-direction: column;
+  width: 355px;
+  height: 500px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+.setCenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .text2 {
-  position: absolute;
-  width: 77px;
   height: 18px;
   top: 340px;
   left: 783px;
@@ -44,17 +48,16 @@ hr {
   font-weight: 700;
   line-height: 17.9px;
   text-align: left;
+  color: rgb(36, 33, 33);
 }
 
 .upload-button {
-  position: absolute;
-  top: 380px;
-  left: 885px;
   width: 149px;
   height: 149px;
+  left: 50%;
   opacity: 0.6;
   border-radius: 50%;
-  background-color: gray;
+  background-color: plum;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,27 +77,27 @@ hr {
   max-width: 1170px;
 }
 
-input {
+#signupForm input {
   width: 355px;
   height: 33px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  border: 1px 0px 0px 0px;
-  opacity: 0px;
+  border-radius: 10px;
+  border: 2px solid blue;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
 }
 
 .helpertext {
   font-size: 12px;
-  position: absolute;
   width: 150x;
   height: 15px;
   gap: 0px;
   opacity: 0px;
   color: #ff0000;
+  margin-bottom: 5px;
 }
 
 .input2 {
-  position: absolute;
   width: 355px;
   height: 33px;
   top: 574px;
@@ -106,25 +109,20 @@ input {
 }
 
 #signupButton {
-  position: absolute;
+  display: flex;
   width: 355px;
   height: 33px;
-  background: #aca0eb;
+  border-radius: 10px;
+  background: #ffa500;
   color: #ffffff;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 16.71px;
-  text-align: center;
-  top: 886px;
-  left: 783px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  opacity: 0px;
+  line-height: 33px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
 }
 
 .signup {
-  position: absolute;
   width: 49px;
   height: 17px;
   top: 694px;
@@ -141,7 +139,6 @@ input {
 }
 
 .go-back {
-  position: absolute;
   top: 36px;
   left: 700px;
   width: 10.93px;
@@ -191,7 +188,6 @@ input {
 }
 
 #input-email {
-  position: absolute;
   width: 355px;
   height: 33px;
   top: 566px;
@@ -203,7 +199,6 @@ input {
 }
 
 #pw {
-  position: absolute;
   width: 60px;
   height: 18px;
   top: 630px;
@@ -213,7 +208,6 @@ input {
 }
 
 #input-pw {
-  position: absolute;
   width: 355px;
   height: 33px;
   top: 653px;
@@ -225,7 +219,6 @@ input {
 }
 
 #pwcheck {
-  position: absolute;
   width: 90px;
   height: 18px;
   top: 716px;
@@ -235,7 +228,6 @@ input {
 }
 
 #confirm-pw {
-  position: absolute;
   width: 355px;
   height: 33px;
   top: 737px;
@@ -247,13 +239,11 @@ input {
 }
 
 #nickname {
-  position: absolute;
   top: 800px;
   left: 783px;
 }
 
 #input-nickname {
-  position: absolute;
   width: 355px;
   height: 33px;
   top: 822px;
@@ -265,18 +255,19 @@ input {
 }
 
 .login {
-  position: absolute;
-  width: 99px;
-  height: 17px;
-  top: 931px;
-  left: 920px;
-  gap: 0px;
-  opacity: 0px;
-  font-family: Pretendard;
+  display: inline-block;
+  font-family: "Pretendard", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 16.71px;
-  text-align: left;
-  text-decoration-line: none;
-  color: black;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #2e7d32;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }

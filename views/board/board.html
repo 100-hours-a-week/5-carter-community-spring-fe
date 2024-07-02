@@ -7,8 +7,10 @@
     <title>게시글 목록조회</title>
   </head>
   <body>
+    <div id="overlay"></div>
     <header>
-      <div id="mainTitle">아무 말 대잔치</div>
+      <img id="board" src="/boardimage" />
+      <div id="mainTitle">Talk Talk Playground</div>
       <div class="dropdown">
         <div class="dropbtn" onclick="toggleDropdown()">
           <img id="profileImage" src="" />
@@ -21,11 +23,10 @@
           </ul>
         </div>
       </div>
-      <hr />
     </header>
     <main>
       <br />
-      <p class="hello">안녕하세요,<br />아무 말 대잔치 <b>게시판</b>입니다.</p>
+      <p class="hello">안녕하세요,<br />자유롭게 놀다가는 공간입니다.</p>
       <div id="writeButton">게시글 작성</div>
       <div id="post-container" class="post-container"></div>
     </main>

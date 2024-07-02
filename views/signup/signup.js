@@ -66,10 +66,10 @@ function checkMessages() {
   const m5 = nicknameMessage.textContent;
   if (m1 || m2 || m3 || m4 || m5) {
     signupButton.disabled = true;
-    signupButton.style.backgroundColor = "#ACA0EB";
+    signupButton.style.backgroundColor = "#ffa500";
   } else {
     signupButton.disabled = false;
-    signupButton.style.backgroundColor = "#7F6AEE";
+    signupButton.style.backgroundColor = "#FF8C00";
   }
 }
 

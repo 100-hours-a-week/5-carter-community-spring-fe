@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -46,7 +46,7 @@ async function refreshAccessToken() {
   }
 }
 
-const mainTitle = document.getElementById("mainTitle");
+const board = document.getElementById("board");
 
 const modalOpenButton = document.getElementById("modalOpenButton");
 const modalCloseButton = document.getElementById("modalCloseButton");
@@ -136,11 +136,24 @@ function transformNumber(number) {
   } else return number;
 }
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+}
+
 async function displayPostDetail(data) {
   postTitle.textContent =
     data.title.length > 26 ? data.title.slice(0, 26) + "..." : data.title;
 
-  postDate.textContent = data.date;
+  postDate.textContent = formatDate(data.date);
   postContent.textContent = data.content;
   views.textContent = transformNumber(data.views);
   authorId = data.userId;
@@ -179,58 +192,70 @@ async function displayPostDetail(data) {
     .catch((error) => console.error("Error fetching image:", error));
 }
 
-async function displayComments(data) {
-  const postContainer = document.getElementById("commentContainer");
-  postContainer.innerHTML = "";
+async function displayComments(comments) {
+  const commentContainer = document.getElementById("commentContainer");
+  commentContainer.innerHTML = "";
 
-  for (const [index, reply] of data.entries()) {
-    const container = document.createElement("div");
-    container.classList.add("my-box");
+  const sortedComments = comments.sort(
+    (a, b) => new Date(b.date) - new Date(a.date),
+  );
 
-    container.style.top = `calc(300px + ${index * 180}px)`;
+  const commentElements = await Promise.all(
+    sortedComments.map(async (comment, index) => {
+      const container = document.createElement("div");
+      container.classList.add("my-box");
 
-    let nickname;
-    let imageUrl;
+      let nickname;
+      let imageUrl;
 
-    await fetchWrapper(
-      `${BACKEND_IP_PORT}/api/users/${reply.userId}/nickname`,
-      {},
-    )
-      .then((response) => response.text())
-      .then((data) => {
-        nickname = data;
-      })
-      .catch((error) => console.error("Error fetching nickname:", error));
+      await fetchWrapper(
+        `${BACKEND_IP_PORT}/api/users/${comment.userId}/nickname`,
+        {},
+      )
+        .then((response) => response.text())
+        .then((data) => {
+          nickname = data;
+        })
+        .catch((error) => console.error("Error fetching nickname:", error));
 
-    await fetchWrapper(`${BACKEND_IP_PORT}/api/users/${reply.userId}/image`, {})
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        imageUrl = url;
-      })
-      .catch((error) => console.error("Error fetching image:", error));
+      await fetchWrapper(
+        `${BACKEND_IP_PORT}/api/users/${comment.userId}/image`,
+        {},
+      )
+        .then((response) => response.blob())
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          imageUrl = url;
+        })
+        .catch((error) => console.error("Error fetching image:", error));
 
-    container.innerHTML = `
-      <div id="commentsContainer">
-          <div>
-              <div style="display:flex;align-items:center;">
-                  <img class="replyImage" src=${imageUrl}></image>
-                  <div class="replyNickname">${nickname}</div>
+      container.innerHTML = `
+          <div id="commentsContainer">
+              <div>
+                  <div style="display:flex;align-items:center;">
+                      <img class="replyImage" src=${imageUrl}></image>
+                      <div class="replyNickname">${nickname}</div>
+                  </div>
+                  <div class="replyContent" id=${index}content>${comment.content}</div>
               </div>
-              <div class="replyContent" id=${index}content>${reply.content}</div>
-          </div>
-      <div class="replyDate">${reply.date}</div>
-      <button class="replyEdit" data-comment-id="${reply.commentId}" data-user-id="${reply.userId}" >수정</button>
-      <button class="cmodalOpenButton" data-comment-id="${reply.commentId}" data-user-id="${reply.userId}">삭제</button>
-      `;
-    postContainer.appendChild(container);
-  }
+          <div class="replyDate">${formatDate(comment.date)}</div>
+          <button class="replyEdit" data-comment-id="${comment.commentId}" data-user-id="${comment.userId}" >수정</button>
+          <button class="cmodalOpenButton" data-comment-id="${comment.commentId}" data-user-id="${comment.userId}">삭제</button>
+          `;
+      return container;
+    }),
+  );
+  commentElements.forEach((container) => {
+    commentContainer.appendChild(container);
+  });
 
   document.addEventListener("click", async (event) => {
     const buttons = document.querySelectorAll(".replyEdit");
     for (let index = 0; index < buttons.length; index++) {
       const button = buttons[index];
       if (button === event.target) {
+        submitCommentButton.disabled = true;
+        submitCommentButton.style.backgroundColor = "#FF8C00";
         const eB = event.target.closest(".replyEdit");
         const id = eB.dataset.userId;
 
@@ -335,10 +360,10 @@ inputComment.addEventListener("input", () => {
   const value = inputComment.value;
   if (!value) {
     submitCommentButton.disabled = true;
-    submitCommentButton.style.backgroundColor = "#ACA0EB";
+    submitCommentButton.style.backgroundColor = "#FF8C00";
   } else {
     submitCommentButton.disabled = false;
-    submitCommentButton.style.backgroundColor = "#7F6AEE";
+    submitCommentButton.style.backgroundColor = "#FF6F00";
   }
 });
 
@@ -375,6 +400,6 @@ postModifyButton.addEventListener("click", async () => {
   }
 });
 
-mainTitle.addEventListener("click", () => {
+board.addEventListener("click", () => {
   window.location.href = "/posts/";
 });

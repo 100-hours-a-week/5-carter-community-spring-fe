@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -46,7 +46,7 @@ async function refreshAccessToken() {
   }
 }
 
-const mainTitle = document.getElementById("mainTitle");
+const board = document.getElementById("board");
 
 const inputTitle = document.getElementById("inputTitle");
 const inputContent = document.getElementById("inputContent");
@@ -82,11 +82,11 @@ function toggleDropdown() {
 
 function checkTitleContent() {
   if (inputTitle.value !== "" && inputContent.value !== "") {
-    cButton.style.backgroundColor = "#7F6AEE";
+    cButton.style.backgroundColor = "#FF8C00";
     helperText.textContent = "";
     completeButton.disabled = false;
   } else {
-    cButton.style.backgroundColor = "#ACA0EB";
+    cButton.style.backgroundColor = "#FFA500";
     completeButton.disabled = true;
     helperText.textContent = "* 제목, 내용을 모두 작성해주세요";
   }
@@ -126,7 +126,7 @@ completeButton.addEventListener("click", async () => {
   formData.append("content", content);
   formData.append("image", file);
 
-  fetchWrapper(`${BACKEND_IP_PORT}/api/posts`, {
+  await fetchWrapper(`${BACKEND_IP_PORT}/api/posts`, {
     method: "POST",
     body: formData,
   })
@@ -134,12 +134,11 @@ completeButton.addEventListener("click", async () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.json();
+      window.location.href = `/posts`;
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
-  window.location.href = `/posts`;
 });
 
 fileInput.addEventListener("change", () => {
@@ -147,6 +146,6 @@ fileInput.addEventListener("change", () => {
   fileNameDisplay.textContent = fileName;
 });
 
-mainTitle.addEventListener("click", () => {
+board.addEventListener("click", () => {
   window.location.href = "/posts/";
 });

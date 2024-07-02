@@ -25,6 +25,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/login/login.html"));
 });
 
+app.get("/boardimage", (req, res) => {
+  res.sendFile(path.join(__dirname, "images/board.webp"));
+});
+
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 

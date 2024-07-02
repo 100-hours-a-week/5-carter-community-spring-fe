@@ -11,7 +11,7 @@ const fetchWrapper = async (url, options = {}) => {
 
   try {
     const response = await fetch(url, { ...options, headers });
-    if (response.status === 401) {
+    if (response.status === 403) {
       await refreshAccessToken();
       accessToken = localStorage.getItem("accessToken");
       headers.set("Authorization", `Bearer ${accessToken}`);
@@ -46,7 +46,7 @@ async function refreshAccessToken() {
   }
 }
 
-const mainTitle = document.getElementById("mainTitle");
+const board = document.getElementById("board");
 const emailDisplay = document.getElementById("email");
 
 const modifyButton = document.getElementById("modifyButton");
@@ -160,7 +160,7 @@ nicknameInput.addEventListener("input", async () => {
         } else {
           nicknameHelper.textContent = "";
           modifyButton.disabled = false;
-          modifyButton.style.backgroundColor = "#7F6AEE";
+          modifyButton.style.backgroundColor = "#FF8C00";
         }
       })
       .catch((error) => console.error("Error fetching request:", error));
@@ -219,10 +219,10 @@ fileInput.addEventListener("change", () => {
     };
     reader.readAsDataURL(selectedFile);
     modifyButton.disabled = false;
-    modifyButton.style.backgroundColor = "#7F6AEE";
+    modifyButton.style.backgroundColor = "#FF8C00";
   }
 });
 
-mainTitle.addEventListener("click", () => {
+board.addEventListener("click", () => {
   window.location.href = "/posts/";
 });

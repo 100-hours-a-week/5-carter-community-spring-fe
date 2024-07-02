@@ -1,20 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-* {
-  background-color: #f4f5f7;
+body {
+  background: linear-gradient(to right, #81d4fa 0%, #a5d6a7 50%, #81d4fa 100%);
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header {
-  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: center;
+  margin: 50px;
+}
+
+#board {
+  width: 50px;
+  height: 50px;
 }
 
 #mainTitle {
-  display: flex;
   font-size: 32px;
-  font-family: "Noto Sans KR", sans-serif;
-  justify-content: center;
+  font-family: "Oswald", sans-serif;
   font-weight: 400;
   line-height: 32px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .dropdown {
@@ -28,7 +44,6 @@ header {
 }
 
 .menu-box {
-  position: absolute;
   top: 85px;
   left: 1100px;
   width: 150px;
@@ -59,24 +74,23 @@ header {
 }
 
 #profileImage {
-  position: absolute;
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 50px;
   top: 36px;
   left: 1196px;
   gap: 0px;
   opacity: 0px;
 }
 
-hr {
-  width: 1000%;
-  height: 1px;
-  margin: auto;
-}
-
-main div {
+main {
   display: flex;
-  position: absolute;
+  flex-direction: column;
+  margin: 120px;
+  margin-bottom: 50px;
+  width: 355px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
 }
 
 #text4 {
@@ -94,7 +108,7 @@ main div {
 }
 
 #text5 {
-  width: 77px;
+  width: 333px;
   height: 18px;
   top: 315px;
   left: 783px;
@@ -108,7 +122,6 @@ main div {
 }
 
 #fileButton {
-  position: absolute;
   width: 52px;
   height: 27px;
   line-height: 27px;
@@ -155,6 +168,7 @@ main div {
   font-weight: 400;
   line-height: 16.71px;
   text-align: left;
+  margin: 5px;
 }
 
 #text9 {
@@ -172,18 +186,13 @@ main div {
 }
 
 #nicknameInput {
-  position: absolute;
   width: 355px;
   height: 33px;
-  top: 633px;
-  left: 783px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  border: 1px 0px 0px 0px;
-  opacity: 0px;
-  border: 1px solid #000000;
-  align-items: center;
-  text-indent: 10px;
+  border-radius: 10px;
+  border: 2px solid blue;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
 }
 
 #nicknameHelper {
@@ -202,15 +211,12 @@ main div {
 }
 
 #modifyButton {
-  position: absolute;
   width: 355px;
   height: 33px;
-  top: 693px;
-  left: 783px;
   gap: 0px;
   border-radius: 10px 10px 10px 10px;
   opacity: 0px;
-  background: #aca0eb;
+  background: #ffa500;
   color: #ffffff;
   text-align: center;
   justify-content: center;
@@ -218,33 +224,7 @@ main div {
   border: none;
 }
 
-#toast {
-  position: absolute;
-  display: flex;
-  width: 102px;
-  height: 46px;
-  top: 832px;
-  left: 895px;
-  padding: 12px 20px 12px 20px;
-  gap: 0px;
-  border-radius: 30px 30px 30px 30px;
-  opacity: 0px;
-  background-color: #aca0eb;
-  color: #ffffff;
-  opacity: 0;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 18px;
-}
-
-#toast.reveal {
-  visibility: visible;
-  opacity: 1;
-}
-
 #profileImageInput {
-  position: absolute;
   width: 149px;
   height: 149px;
   top: 244px;
@@ -254,16 +234,20 @@ main div {
 }
 
 #modalOpenButton {
-  position: absolute;
-  width: 327px;
-  height: 41px;
-  top: 726px;
-  left: 799px;
-  line-height: 41px;
+  display: inline-block;
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   text-align: center;
-  justify-content: center;
-  border: none;
-  background-color: none;
+  text-decoration: none;
+  color: white;
+  background-color: #333;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 #modalOpenButton,
@@ -272,9 +256,9 @@ main div {
 }
 
 #modalContainer {
+  position: fixed;
   width: 100%;
   height: 100%;
-  position: absolute;
   top: 0;
   left: 0;
   display: flex;
@@ -284,8 +268,8 @@ main div {
 }
 
 #modalContent {
-  position: absolute;
   display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   width: 408px;
   height: 242px;
@@ -298,7 +282,6 @@ main div {
 }
 
 #delete-title {
-  position: absolute;
   top: 25px;
   left: 95px;
   font-family: Pretendard;
@@ -312,7 +295,6 @@ main div {
 }
 
 #delete-content {
-  position: absolute;
   top: 100px;
   left: 70px;
   font-family: Pretendard;
@@ -338,7 +320,6 @@ main div {
 }
 
 #modalCloseButton {
-  position: absolute;
   width: 127px;
   height: 44px;
   top: 150px;
@@ -353,10 +334,10 @@ main div {
   text-align: center;
   background-color: black;
   color: #ffffff;
+  border: none;
 }
 
 #agreeButton {
-  position: absolute;
   top: 150px;
   left: 200px;
   width: 127px;
@@ -372,4 +353,37 @@ main div {
   background: #c4a5fa;
   color: black;
   border: none;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  margin: 10px;
+}
+#toast {
+  position: fixed; /* 화면에 고정 */
+  bottom: 200px; /* 화면 하단에서 200px 위 */
+  left: 50%; /* 화면의 가로 중앙 */
+  transform: translateX(-50%); /* 가로 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto; /* 내용에 맞게 크기 조정 */
+  padding: 12px 20px;
+  border-radius: 30px;
+  background-color: #ff8c00;
+  color: #ffffff;
+  font-size: 18px;
+  opacity: 0; /* 처음에 보이지 않도록 설정 */
+  visibility: hidden; /* 처음에 보이지 않도록 설정 */
+  transition:
+    opacity 0.5s,
+    visibility 0.5s; /* 부드러운 전환 효과 */
+}
+
+#toast.reveal {
+  visibility: visible;
+  opacity: 1;
 }

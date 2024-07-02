@@ -8,13 +8,13 @@
   </head>
   <body>
     <header>
-      <button class="go-back" onclick="history.back()">&#60;</button>
-      <div id="mainTitle">아무 말 대잔치</div>
+      <img id="board" src="/boardimage" />
+      <div id="mainTitle">Talk Talk Playground</div>
       <div class="dropdown">
         <div class="dropbtn" onclick="toggleDropdown()">
           <img id="profileImage" src="" />
         </div>
-        <div class="menu-box" id="menu-box">
+        <div class="menu-box" id="menu-box" style="display: none">
           <ul class="menu-list">
             <li><a href="/users/infomodify">회원정보 수정</a></li>
             <li><a href="/users/pwmodify">비밀번호 수정</a></li>
@@ -22,7 +22,6 @@
           </ul>
         </div>
       </div>
-      <hr />
     </header>
     <br />
     <div id="postContainer">
